@@ -10,8 +10,8 @@ export default function Header(){
                         <h1 className="text-xl">MyPeace</h1>
                     </div>
                     <div className="flex items-center gap-x-8">
-                        <Link to="">Perfil</Link>
-                        <Link to="">Homes</Link>
+                        <Link to="">Login</Link>
+                        <Link to="/cadastroPsicologo">Cadastro</Link>
                     </div>
             </nav>
         </header>
