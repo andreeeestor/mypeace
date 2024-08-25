@@ -116,11 +116,10 @@ export default function PrincipalCliente() {
   return (
     <>
     {modalEdt && (
-      <Modal />
+      <Modal isOpen={modalEdt} setIsOpen={setModalEdt} titulo={`Editar Dados`} form />
     )}
     {modalDel && (
-      <>
-      </>
+      <Modal isOpen={modalDel} setIsOpen={setModalDel} titulo={`Excluir Conta`} del />
     )}
       <header className="p-3 z-50 w-full text-white">
         <div className=" bg-green-900 rounded-2xl px-6 py-4 shadow-xl flex items-center justify-between border-b-4 border-green-400">
@@ -166,7 +165,7 @@ export default function PrincipalCliente() {
             <h2 className="font-semibold text-lg">Editar Dados</h2>
           </div>
 
-          <div className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
+          <div onClick={() => setModalDel(true)} className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
             <Trash size={40} />
             <h2 className="font-semibold text-lg">Deletar Conta</h2>
           </div>
@@ -179,7 +178,7 @@ export default function PrincipalCliente() {
               <br />
               expressão de sentimentos.
             </h1>
-            <button className="absolute bottom-0 right-0 p-5 bg-pink-500 rounded-tl-2xl rounded-br-xl hover:pb-6 transition-all flex items-center gap-2">
+            <button className="absolute bottom-0 right-0 p-5 bg-pink-500 shadow-3D rounded-tl-2xl rounded-br-xl hover:pb-6 transition-all flex items-center gap-2">
               <h6 className="text-sm">Acessar</h6>
               <ArrowUpRight weight="bold" />
             </button>
@@ -190,7 +189,7 @@ export default function PrincipalCliente() {
               <br />
               Acesse nossa respiração guiada.
             </h1>
-            <button className="absolute bottom-0 right-0 p-5 bg-pink-500 rounded-tl-2xl rounded-br-xl hover:pb-6 transition-all flex items-center gap-2">
+            <button className="absolute bottom-0 right-0 p-5 bg-pink-500 shadow-3D rounded-tl-2xl rounded-br-xl hover:pb-6 transition-all flex items-center gap-2">
               <h6 className="text-sm">Acessar</h6>
               <ArrowUpRight weight="bold" />
             </button>
