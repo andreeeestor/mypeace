@@ -86,7 +86,7 @@ export default function CadastroPsicologo() {
         }}
       />
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6 shadow-2xl">
+        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <div className="absolute inset-0 h-full w-full bg-green-900 rounded-l-3xl lg:shadow-2xl" />
           <div className="absolute inset-0 h-full w-[90%] bg-green-950 rounded-3xl " />
           <div className="absolute inset-0 h-full w-[80%] bg-green-900 rounded-3xl " />
