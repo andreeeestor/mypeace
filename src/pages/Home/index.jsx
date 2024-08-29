@@ -32,8 +32,6 @@ export default function Home() {
             />
           </Carousel>
         </section>
-      <div className="lg:h-12 h-6"></div>
-        <AuroraHero />
         <div className="lg:h-12 h-6" />
         <section className="w-full bg-[#3C5454] rounded-xl py-8 space-y-12 shadow-3D">
           <div className="flex flex-col justify-center items-center gap-y-3 text-white">
@@ -122,6 +120,8 @@ export default function Home() {
             </article>
           </div>
         </section>
+        <div className="lg:h-12 h-6" />
+        <AuroraHero />
       </Container>
     </>
   );
