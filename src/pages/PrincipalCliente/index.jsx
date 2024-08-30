@@ -122,17 +122,18 @@ export default function PrincipalCliente() {
       <Modal isOpen={modalDel} setIsOpen={setModalDel} titulo={`Excluir Conta`} del />
     )}
       <header className="p-3 z-50 w-full text-white">
-        <div className=" bg-green-900 rounded-2xl px-6 py-4 shadow-xl flex items-center justify-between border-b-4 border-green-400">
-          <div className="flex items-center gap-4">
+        <div className=" bg-green-900 rounded-2xl px-6 py-4 shadow-xl flex items-center justify-center md:justify-between md:flex-row flex-col border-b-4 border-green-400">
+          <div className="flex md:flex-row flex-col items-center gap-4">
             <div className="rounded-full border-2 border-green-500 w-16 h-16 flex items-center justify-center">
               <User fill="white" size={24} />
             </div>
-            <div>
+            <div className="md:text-start text-center text-lg">
               <h1 className="font-bold">Olá, </h1>
               <h2 className="italic">Nome do Cliente</h2>
             </div>
           </div>
-          <Link to="/" className="m-6 group relative w-max">
+          <div className="h-px w-full bg-white md:hidden block my-3" />
+          <Link to="/" className="md:m-6 group relative w-max">
             <div className="flex items-center transition-all gap-1 hover:gap-2">
               <ArrowLeft size={20} />
               <h1 className="font-medium">Início</h1>
@@ -172,7 +173,7 @@ export default function PrincipalCliente() {
         </section>
         <h1 className="py-11 text-2xl font-bold">Guias</h1>
         <section className="flex items-center flex-col gap-10">
-          <div className="w-full h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">
+          <div className="w-full h-72 sm:h-56 md:h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">
             <h1 className="font-light leading-9">
               Confira seus últimos registros de
               <br />
@@ -183,7 +184,7 @@ export default function PrincipalCliente() {
               <ArrowUpRight weight="bold" />
             </button>
           </div>
-          <div className="w-full h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">
+          <div className="w-full h-72 sm:h-56 md:h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">
             <h1 className="font-light leading-9">
               Problemas com ansiedade, ataque de pânico?
               <br />

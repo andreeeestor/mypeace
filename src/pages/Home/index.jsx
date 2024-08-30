@@ -4,6 +4,7 @@ import * as Icon from "@phosphor-icons/react";
 import HomeCards from "../../components/HomeCards";
 import { Carousel } from "flowbite-react";
 import { AuroraHero } from "../../components/AuroraHero";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   return (
@@ -33,14 +34,16 @@ export default function Home() {
           </Carousel>
         </section>
         <div className="lg:h-12 h-6" />
-        <section className="w-full bg-[#3C5454] rounded-xl py-8 space-y-12 shadow-3D">
+        <section className="w-full bg-[#3C5454] rounded-xl p-8 md:py-8 space-y-12 shadow-3D">
           <div className="flex flex-col justify-center items-center gap-y-3 text-white">
-            <h5 className="uppercase tracking-[0.2em] text-xs font-light">serviços</h5>
+            <h5 className="uppercase tracking-[0.2em] text-xs font-light">
+              serviços
+            </h5>
             <h1 className="text-center text-2xl">
               Descubra quais ferramentas o MyPeace disponibiliza!
             </h1>
           </div>
-          <div className="flex items-center justify-around gap-x-4">
+          <div className="flex items-center flex-wrap justify-around gap-y-12">
             <HomeCards
               titulo={"Interação entre psicólogo e paciente"}
               icone={<Icon.Chats size={64} weight="duotone" />}
@@ -67,7 +70,7 @@ export default function Home() {
               <div className="w-full h-[350px] rounded-t-2xl bg-green-400 flex justify-center items-center lg:hidden">
                 <Icon.HandHeart weight="fill" size={96} />
               </div>
-              <div className="gap-y-10 flex flex-col px-12 justify-center lg:h-[600px]">
+              <div className="gap-y-10 flex flex-col px-12 py-10 lg:py-0 lg:px-12 justify-center lg:h-[600px]">
                 <h1 className="text-white  uppercase font-black text-3xl">
                   Benefícios da terapia
                 </h1>
@@ -105,7 +108,7 @@ export default function Home() {
               <div className="w-full h-[350px] rounded-t-2xl bg-green-400 flex justify-center items-center lg:hidden">
                 <Icon.Heartbeat weight="fill" size={96} />
               </div>
-              <div className="gap-y-10 flex flex-col px-12 justify-center lg:h-[600px]">
+              <div className="gap-y-10 flex flex-col px-12 py-10 lg:py-0 lg:px-12 justify-center lg:h-[600px]">
                 <h1 className="text-white  uppercase font-black text-3xl">
                   Mudando vidas
                 </h1>
@@ -123,6 +126,7 @@ export default function Home() {
         <div className="lg:h-12 h-6" />
         <AuroraHero />
       </Container>
+      <Footer />
     </>
   );
 }

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import { http } from "../../App";
 import Modal from "../../components/Modal";
+import Example from "../../components/FloatingPhone";
+import FloatingPhone from "../../components/FloatingPhone";
 
 export default function CadastroPsicologo() {
   const [nome, setNome] = useState("");
@@ -86,17 +88,8 @@ export default function CadastroPsicologo() {
         }}
       />
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
-          <div className="absolute inset-0 h-full w-full bg-green-900 rounded-l-3xl lg:shadow-2xl" />
-          <div className="absolute inset-0 h-full w-[90%] bg-green-950 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[80%] bg-green-900 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[70%] bg-green-950 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[60%] bg-green-900 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[50%] bg-green-950 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[40%] bg-green-900 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[30%] bg-green-950 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[20%] bg-green-900 rounded-3xl " />
-          <div className="absolute inset-0 h-full w-[10%] bg-green-950 rounded-l-3xl" />
+        <aside className="relative w-full block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6 bg-green-900 shadow-xl rounded-b-3xl lg:rounded-br-none lg:rounded-l-3xl">
+          <FloatingPhone className={"absolute top-[28%] left-[35%] lg:block hidden"} />
         </aside>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
