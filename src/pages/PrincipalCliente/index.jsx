@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
+import HoverForCards from "../../components/HoverForCards";
 
 export default function PrincipalCliente() {
   const navigate = useNavigate();
@@ -145,7 +146,7 @@ export default function PrincipalCliente() {
       </header>
       <main className="max-w-[1440px] mx-auto 2xl:p-0 py-3 px-6">
         <h1 className="py-7 text-2xl font-bold">Acesso Rápido</h1>
-        <section className="flex items-center justify-center md:gap-0 gap-5 md:justify-between flex-wrap">
+        {/* <section className="flex items-center justify-center md:gap-0 gap-5 md:justify-between flex-wrap">
           <div className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
             <BookBookmark size={40} />
             <h2 className="font-semibold text-lg">Diário</h2>
@@ -170,7 +171,8 @@ export default function PrincipalCliente() {
             <Trash size={40} />
             <h2 className="font-semibold text-lg">Deletar Conta</h2>
           </div>
-        </section>
+        </section> */}
+        <HoverDevCards onClickEdt={() => setModalEdt(true)} onClickDel={() => setModalDel(true)} />
         <h1 className="py-11 text-2xl font-bold">Guias</h1>
         <section className="flex items-center flex-col gap-10">
           <div className="w-full h-72 sm:h-56 md:h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">
@@ -200,3 +202,15 @@ export default function PrincipalCliente() {
     </>
   );
 }
+
+const HoverDevCards = ({onClickEdt, onClickDel}) => {
+  return (
+      <div className="grid justify-between gap-4 grid-cols-2 lg:grid-cols-4">
+        <HoverForCards title="Diário" subtitle={<ArrowUpRight />} Icon={BookBookmark} />
+        <HoverForCards title="Respiração Guiada" subtitle={<ArrowUpRight />} Icon={Wind} link={"/principalPsico/listapaciente"} isLink />
+        <HoverForCards title="Registro Emoções" subtitle={<ArrowUpRight />} Icon={Database} />
+        <HoverForCards title="Editar Dados" subtitle={<ArrowUpRight />} Icon={NotePencil} onClick={onClickEdt} />
+        <HoverForCards title="Deletar Conta" subtitle={<ArrowUpRight />} Icon={Trash} onClick={onClickDel} />
+      </div>
+  );
+};
