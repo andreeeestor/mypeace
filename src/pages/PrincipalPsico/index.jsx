@@ -60,7 +60,7 @@ import {
         </header>
         <main className="max-w-[1440px] mx-auto 2xl:p-0 py-3 px-6">
           <h1 className="py-7 text-2xl font-bold">Acesso Rápido</h1>
-          <section className="flex items-center justify-center md:gap-0 gap-5 md:justify-around flex-wrap">
+          <section className="flex items-center justify-center md:gap-0 gap-5 md:justify-between flex-wrap">
             <div className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
               <UserCirclePlus size={40} />
               <h2 className="font-semibold text-lg">Adicionar Paciente</h2>

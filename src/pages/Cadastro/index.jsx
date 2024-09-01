@@ -39,12 +39,14 @@ export default function CadastroPsicologo() {
       .catch((error) => {
         if (error.response) {
           setMensagem(error.response.data.msg);
-          toast.error(`${error.response.data.msg}`)
+          toast.error(`${error.response.data.msg}`);
         } else {
           setMensagem(
             "Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde."
           );
-          toast.error("Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde.")
+          toast.error(
+            "Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde."
+          );
         }
       });
   };
@@ -52,7 +54,7 @@ export default function CadastroPsicologo() {
   const handleEmailVerification = (e) => {
     e.preventDefault();
     console.log("Verificação de e-mail enviada");
-    toast.info("Verificação de e-mail enviada")
+    toast.info("Verificação de e-mail enviada");
     window.location.href = "/login";
   };
 
@@ -88,17 +90,14 @@ export default function CadastroPsicologo() {
         }}
       />
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative w-full block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6 bg-green-900 shadow-xl rounded-b-3xl lg:rounded-br-none lg:rounded-l-3xl">
-          <FloatingPhone className={"absolute top-[28%] left-[35%] lg:block hidden"} />
+        <aside className="relative w-full h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6 bg-green-900 shadow-xl rounded-b-3xl lg:rounded-br-none lg:rounded-l-3xl flex items-center justify-center">
+          <FloatingPhone className={"lg:block hidden"} />
         </aside>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
             <header className="w-full flex justify-between items-center">
-              <img
-                src={Logo}
-                className="w-12"
-              />
+              <img src={Logo} className="w-12" />
               <Link
                 className="cursor-pointer hover:opacity-95 relative w-fit block after:block after:content-[''] after:absolute after:h-[2px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center"
                 to="/"
@@ -184,7 +183,10 @@ export default function CadastroPsicologo() {
                   Cadastrar
                 </button>
 
-                <p onClick={() => setEmailVerificationVisible(true)} className="mt-4 text-sm text-gray-500 sm:mt-0">
+                <p
+                  onClick={() => setEmailVerificationVisible(true)}
+                  className="mt-4 text-sm text-gray-500 sm:mt-0"
+                >
                   Já tem uma conta?
                   <Link to={"/login"} className="text-gray-700 underline ml-2">
                     Login
@@ -194,7 +196,15 @@ export default function CadastroPsicologo() {
               </div>
             </form>
           </div>
-            <Modal isOpen={isEmailVerificationVisible} setIsOpen={setEmailVerificationVisible} emailVerification email={email} valueEmailV={codigo} onChangeEmailV={(e) => setCodigo(e.target.value)} onClickEmailV={handleEmailVerification} />
+          <Modal
+            isOpen={isEmailVerificationVisible}
+            setIsOpen={setEmailVerificationVisible}
+            emailVerification
+            email={email}
+            valueEmailV={codigo}
+            onChangeEmailV={(e) => setCodigo(e.target.value)}
+            onClickEmailV={handleEmailVerification}
+          />
         </main>
       </div>
     </section>

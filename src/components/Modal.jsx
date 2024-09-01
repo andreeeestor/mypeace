@@ -169,12 +169,6 @@ export default function Modal({
                     >
                       Voltar
                     </button>
-                    {/* <button
-                      onClick={() => setIsOpen(false)}
-                      className="bg-white hover:opacity-90 transition-opacity text-[#00bfa6] font-semibold w-full py-2 rounded"
-                    >
-                      Verificar
-                    </button> */}
                   </div>
                 </div>
               </motion.div>

@@ -1,53 +1,37 @@
-export default function Table({_id, name, email}) {
+export default function Table({children}) {
   return (
     <>
-      <div className="rounded-lg border border-gray-200">
+      <div className="rounded-xl">
         <div className="overflow-x-auto rounded-t-lg">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="ltr:text-left rtl:text-right">
               <tr>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                   ID
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                   Nome
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                   Email
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                   Registro
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                   Ações
                 </th>
               </tr>
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              <tr>
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                  {_id}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  {name}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  {email}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  
-                </td>
-              </tr>
-
+              {children}
             </tbody>
           </table>
         </div>
 
-        <div className="rounded-b-lg border-t border-gray-200 px-4 py-2">
+        {/* ISSO AQUI EM BAIXO É SÓ PARA FAZER AQUELA NAVEGAÇÃO */}
+        {/* <div className="rounded-b-lg border-t border-gray-200 px-4 py-2">
           <ol className="flex justify-end gap-1 text-xs font-medium">
             <li>
               <a
@@ -122,7 +106,7 @@ export default function Table({_id, name, email}) {
               </a>
             </li>
           </ol>
-        </div>
+        </div> */}
       </div>
     </>
   );

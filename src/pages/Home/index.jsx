@@ -126,6 +126,7 @@ export default function Home() {
         <div className="lg:h-12 h-6" />
         <AuroraHero />
       </Container>
+      <div className="lg:h-12 h-6" />
       <Footer />
     </>
   );

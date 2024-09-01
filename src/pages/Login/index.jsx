@@ -1,80 +1,57 @@
-import { useState } from "react";
-import { ArrowLeft } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
 import Logo from "../../assets/images/logo.svg";
-import Inputs from "../../components/Inputs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, SignIn } from "@phosphor-icons/react";
 import { Toaster, toast } from "sonner";
 import { http } from "../../App";
-import Modal from "../../components/Modal";
-import Example from "../../components/FloatingPhone";
-import FloatingPhone from "../../components/FloatingPhone";
+import Inputs from "../../components/Inputs";
 
 export default function Login() {
-  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [registroNumero, setRegistroNumero] = useState("");
   const [senha, setSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const [isEmailVerificationVisible, setEmailVerificationVisible] =
-    useState(false);
-  const [codigo, setCodigo] = useState("");
+  const [token, setToken] = useState("");
+  const [id, setId] = useState("");
+  const [type, setType] = useState("");
+  const navigate = useNavigate();
 
-  const cadastrar = (event) => {
+  useEffect(() => {
+    if (type === "pacient") {
+      navigate("/principalCliente", { state: { token, id } });
+    } else if (type === "psychologist") {
+      navigate("/principalPsico", { state: { token, id } });
+    }
+  }, [type, token, id, navigate]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    http
-      .post(`/register/psychologist`, {
-        name: nome,
+    try {
+      const response = await http.post("/auth/login", {
         email: email,
-        cpf: cpf,
-        registerNumber: registroNumero,
         password: senha,
-        confirmPassword: confirmarSenha,
-      })
-      .then((resp) => {
-        setEmailVerificationVisible(true);
-      })
-      .catch((error) => {
-        if (error.response) {
-          setMensagem(error.response.data.msg);
-          toast.error(`${error.response.data.msg}`)
-        } else {
-          setMensagem(
-            "Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde."
-          );
-          toast.error("Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde.")
-        }
       });
-  };
-
-  const handleEmailVerification = (e) => {
-    e.preventDefault();
-    console.log("Verificação de e-mail enviada");
-    toast.info("Verificação de e-mail enviada")
-    window.location.href = "/login";
-  };
-
-  const handleCpfChange = (e) => {
-    const formattedCpf = e.target.value
-      .replace(/\D/g, "")
-      .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-    setCpf(formattedCpf);
-  };
-
-  const handleCrpChange = (e) => {
-    const formattedCrp = e.target.value
-      .replace(/\D/g, "")
-      .replace(/(\d{2})(\d{4})(\d{1})/, "$1/$2-$3");
-    setRegistroNumero(formattedCrp);
+      setId(response.data.id);
+      setToken(response.data.token);
+      setType(response.data.type);
+      if (type === "pacient") {
+        navigate("/principalCliente", { state: { token, id } });
+        console.log(type);
+      } else if (type === "psychologist") {
+        navigate("/principalPsico", { state: { token, id } });
+        console.log(type);
+      }
+      console.log(type);
+    } catch (e) {
+      toast.error(`${e.response.data.msg}`);
+      console.log(e);
+    }
   };
 
   return (
-    <section className="bg-white">
+    <>
       <Toaster
         expand
-        position="top-center"
+        position="bottom-center"
         richColors
         toastOptions={{
           style: {
@@ -87,116 +64,84 @@ export default function Login() {
           },
         }}
       />
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative w-full block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6 bg-green-900 shadow-xl rounded-b-3xl lg:rounded-br-none lg:rounded-l-3xl">
-          <FloatingPhone className={"absolute top-[28%] left-[35%] lg:block hidden"} />
-        </aside>
-
-        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <div className="max-w-xl lg:max-w-3xl">
-            <header className="w-full flex justify-between items-center">
-              <img
-                src={Logo}
-                className="w-12"
+      <main className="w-full h-screen grid place-content-center bg-[#3c5454] space-y-6">
+        <div className="flex flex-col items-center gap-y-6">
+          <img src={Logo} alt="logo" />
+          <h1 className="font-semibold text-white text-2xl text-center">
+            Faça o login na sua conta
+          </h1>
+        </div>
+        <div className="bg-white shadow-3D sm:rounded-lg p-6 sm:p-10 sm:w-[480px] w-screen h-96 flex flex-col justify-center">
+          <form className="grid grid-cols-6 space-y-12" onSubmit={handleSubmit}>
+            <div className="col-span-6 relative z-0">
+              <Inputs
+                type="email"
+                label="Email:"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <Link
-                className="cursor-pointer hover:opacity-95 relative w-fit block after:block after:content-[''] after:absolute after:h-[2px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center"
-                to="/"
+            </div>
+
+            <div className="col-span-6 relative z-0">
+              <Inputs
+                isSenha
+                label="Senha:"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+            </div>
+            <div className="col-span-6 flex flex-col items-center justify-center sm:gap-4">
+              <button
+                type="submit"
+                className='
+        relative z-0 flex items-center justify-center gap-2 overflow-hidden rounded-lg border-[1px] 
+        border-[#00bfa6] px-4 py-2 font-semibold
+        uppercase text-[#00bfa6] transition-all duration-300
+        
+        before:absolute before:inset-0
+        before:-z-10 before:translate-x-[150%]
+        before:translate-y-[150%] before:scale-[2.5]
+        before:rounded-[100%] before:bg-[#00bfa6]
+        before:transition-transform before:duration-1000
+        before:content-[""]
+          
+        w-full
+        hover:scale-105 hover:text-white
+        hover:before:translate-x-[0%]
+        hover:before:translate-y-[0%]
+        active:scale-95'
               >
-                <div className="flex items-center hover:gap-x-1.5 gap-x-1 transition-all">
-                  <ArrowLeft />
-                  Voltar
-                </div>
-              </Link>
-            </header>
-
-            <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-              Login
-            </h1>
-
-            <p className="mt-4 leading-relaxed text-gray-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              nam dolorum aliquam, quibusdam aperiam voluptatum.
-            </p>
-
-            <form onSubmit={cadastrar} className="mt-8 grid grid-cols-6 gap-5">
-              <div className="col-span-6 relative z-0">
-                <Inputs
-                  type="text"
-                  label="Nome Completo:"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                />
-              </div>
-
-              <div className="col-span-6 relative z-0">
-                <Inputs
-                  type="email"
-                  label="Email:"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="col-span-6 sm:col-span-3 relative z-0">
-                <Inputs
-                  isSenha
-                  label="Senha:"
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                />
-              </div>
-
-              <div className="col-span-6 sm:col-span-3 relative z-0">
-                <Inputs
-                  isSenha
-                  label="Confirmação de Senha:"
-                  value={confirmarSenha}
-                  onChange={(e) => setConfirmarSenha(e.target.value)}
-                />
-              </div>
-
-              <div className="col-span-6 relative z-0">
-                <Inputs
-                  type="text"
-                  label="CPF:"
-                  isCpf
-                  value={cpf}
-                  onChange={handleCpfChange}
-                />
-              </div>
-
-              <div className="col-span-6 relative z-0">
-                <Inputs
-                  type="text"
-                  label="CRP:"
-                  isCrp
-                  value={registroNumero}
-                  onChange={handleCrpChange}
-                />
-              </div>
-
-              <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button
-                  type="submit"
-                  className="inline-block shrink-0 rounded-md border-2 border-[#00bfa6] bg-[#00bfa6] px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-[#00bfa6] focus:outline-none focus:ring active:text-[#00bfa6]"
+                <SignIn />
+                <span>Entrar</span>
+              </button>
+              <p
+                onClick={() => setEmailVerificationVisible(true)}
+                className="mt-4 text-sm text-gray-500 sm:mt-0"
+              >
+                Não tem uma conta?{" "}
+                <Link
+                  to={"/cadastroPsicologo"}
+                  className="text-gray-700 transition-colors hover:text-gray-800 hover:font-medium underline ml-2"
                 >
-                  Entrar
-                </button>
-
-                <p onClick={() => setEmailVerificationVisible(true)} className="mt-4 text-sm text-gray-500 sm:mt-0">
-                  Não tem uma conta?
-                  <Link to={"/cadastroPsicologo"} className="text-gray-700 underline ml-2">
-                    Cadastrar
-                  </Link>
-                  .
-                </p>
-              </div>
-            </form>
-          </div>
-            <Modal isOpen={isEmailVerificationVisible} setIsOpen={setEmailVerificationVisible} emailVerification email={email} valueEmailV={codigo} onChangeEmailV={(e) => setCodigo(e.target.value)} onClickEmailV={handleEmailVerification} />
-        </main>
-      </div>
-    </section>
+                  {" "}
+                  Cadastrar{" "}
+                </Link>{" "}
+              </p>
+            </div>
+          </form>
+        </div>
+        <div className="flex items-center flex-col justify-center pt-6">
+          <Link
+            className="cursor-pointer hover:opacity-95 relative w-fit block after:block after:content-[''] after:absolute after:h-[2px] after:bg-white text-white after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center"
+            to="/"
+          >
+            <div className="flex items-center hover:gap-x-1.5 gap-x-1 transition-all">
+              <ArrowLeft />
+              Voltar
+            </div>
+          </Link>
+        </div>
+      </main>
+    </>
   );
 }
