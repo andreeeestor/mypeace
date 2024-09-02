@@ -109,13 +109,15 @@ export default function CadastroPsicologo() {
               </Link>
             </header>
 
-            <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+            <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl flex items-center">
               Cadastro
+              <span className="font-light px-2">|</span>
+              Psicólogo
             </h1>
 
             <p className="mt-4 leading-relaxed text-gray-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              nam dolorum aliquam, quibusdam aperiam voluptatum.
+            Bem-Vindo ao MyPeace!<br/>
+            Preencha os campos abaixo para criar sua conta como psicólogo e ter acesso à nossa plataforma.
             </p>
 
             <form onSubmit={cadastrar} className="mt-8 grid grid-cols-6 gap-5">
@@ -184,7 +186,6 @@ export default function CadastroPsicologo() {
                 </button>
 
                 <p
-                  onClick={() => setEmailVerificationVisible(true)}
                   className="mt-4 text-sm text-gray-500 sm:mt-0"
                 >
                   Já tem uma conta?

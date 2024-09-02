@@ -3,6 +3,8 @@ import { CalendarDots, UserPlus, ArrowLeft } from "@phosphor-icons/react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Table from "../../components/Table";
+import Modal from "../../components/Modal";
+import { Toaster, toast } from "sonner";
 
 export default function ListaPaciente() {
   const { state } = useLocation();
@@ -10,7 +12,6 @@ export default function ListaPaciente() {
   const [token, setToken] = useState("");
   const [id, setId] = useState("");
   const [pacientes, setPacientes] = useState([]);
-  const [mensagem, setMensagem] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [modalDel, setModalDel] = useState(false);
@@ -38,9 +39,7 @@ export default function ListaPaciente() {
       );
       setPacientes(response.data.allPacients);
     } catch (error) {
-      setMensagem(
-        "Erro ao buscar pacientes. Por favor, tente novamente mais tarde."
-      );
+      toast.error( "Erro ao buscar pacientes. Por favor, tente novamente mais tarde.")
     }
   }
 
@@ -60,12 +59,9 @@ export default function ListaPaciente() {
           },
         }
       );
-      setMensagem(
-        `Senha do usuáio: ${response.data.password}` ||
-          "Paciente cadastrado com sucesso!"
-      );
+      toast.success(`Senha do usuáio: ${response.data.password}` ||
+      "Paciente cadastrado com sucesso!")
       setModalAdd(false);
-      alert(mensagem);
       fetchPacientes(token, id);
     } catch (error) {
       handleErrorResponse(error);
@@ -85,7 +81,7 @@ export default function ListaPaciente() {
           idPsychologist: id,
         }
       );
-      setMensagem(response.data.msg || "Paciente editado com sucesso!");
+      toast.success(`${response.data.msg}` || "Paciente editado com sucesso!")
       setModalEdt(false);
       fetchPacientes(token, id);
     } catch (error) {
@@ -105,7 +101,7 @@ export default function ListaPaciente() {
           },
         }
       );
-      setMensagem(response.data.msg || "Paciente deletado com sucesso!");
+      toast.success(`${response.data.msg}` || "Paciente deletado com sucesso!")
       setModalDel(false);
       fetchPacientes(token, id);
     } catch (error) {
@@ -119,15 +115,10 @@ export default function ListaPaciente() {
         alert("Sessão expirada");
         navigate("/login");
       } else {
-        setMensagem(
-          error.response.data.msg ||
-            "Erro ao processar a solicitação. Por favor, tente novamente mais tarde."
-        );
+        toast.error(`${error.response.data.msg}` || "Erro ao processar a solicitação. Por favor, tente novamente mais tarde.")
       }
     } else {
-      setMensagem(
-        "Erro ao processar a solicitação. Por favor, tente novamente mais tarde."
-      );
+      toast.error("Erro ao processar a solicitação. Por favor, tente novamente mais tarde.")
     }
   }
 
@@ -144,6 +135,24 @@ export default function ListaPaciente() {
   }
   return (
     <div className="bg-[#3c5454] h-screen">
+      <Toaster
+        expand
+        position="top-center"
+        richColors
+        toastOptions={{
+          style: {
+            margin: "10px",
+            padding: "15px",
+            maxWidth: "400px",
+            borderRadius: "8px",
+            gap: "10px",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      />
+      {modalAdd && (
+      <Modal isOpen={modalAdd} setIsOpen={setModalAdd} titulo={`Adicionar Paciente`} isAddPaciente onSubmitAddPaciente={cadastrar} />
+    )}
       <header className="flex items-center justify-between max-w-[1440px] mx-auto">
         <h1 className="text-4xl py-12 text-white font-semibold">
           Lista de Pacientes
@@ -160,7 +169,8 @@ export default function ListaPaciente() {
       </header>
       <main className="max-w-[1440px] mx-auto bg-white shadow-3D rounded-xl p-6">
         <header className="flex items-center justify-between gap-x-5 border-b border-gray-300 pb-6">
-          <button className="group flex h-10 items-center gap-2 rounded-xl bg-neutral-200 pl-3 pr-4 transition-all duration-300 ease-in-out hover:bg-black hover:pl-2 hover:text-white active:bg-neutral-700 shadow-3D">
+          <button onClick={() => setModalAdd(true)} className="group flex h-10 items-center gap-2 rounded-xl bg-neutral-200 pl-3 pr-4 transition-all duration-300 ease-in-out hover:bg-black hover:pl-2 hover:text-white active:bg-neutral-700 shadow-3D relative">
+          <span className="animate-ping absolute inline-flex w-3 h-3 left-[10px] rounded-full bg-slate-900 group-hover:hidden" />
             <span className="rounded-full bg-black p-1 text-sm transition-colors duration-300 group-hover:bg-white">
               <UserPlus
                 weight="bold"
@@ -171,7 +181,7 @@ export default function ListaPaciente() {
               Adicionar Paciente
             </span>
           </button>
-          <div className="p-4 bg-purple-700 rounded-full text-xs text-white font-semibold flex items-center gap-x-2 shadow-md">
+          <div className="p-4 bg-indigo-500 rounded-full text-xs text-white font-semibold flex items-center gap-x-2 shadow-md">
             <CalendarDots weight="fill" size={18} />
             <span className="font-medium">•</span>
             {new Date().toLocaleDateString()}
@@ -196,7 +206,7 @@ export default function ListaPaciente() {
             ))
           ) : (
             <tr className="cadastros">
-              <td className="py-2">Nenhum paciente encontrado</td>
+              <td className="py-2 italic">Nenhum paciente encontrado</td>
             </tr>
           )}
         </Table>
