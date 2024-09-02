@@ -230,7 +230,8 @@ const HoverDevCards = ({ onClickEdt, onClickDel }) => {
         title="Respiração Guiada"
         subtitle={<ArrowUpRight />}
         Icon={Wind}
-        link={"/principalPsico/listapaciente"}
+        link={"/principalCliente/cronometro"}
+        isLink
       />
       <HoverForCards
         title="Registro Emoções"
