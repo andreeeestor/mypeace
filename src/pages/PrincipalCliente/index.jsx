@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import HoverForCards from "../../components/HoverForCards";
+import Inputs from "../../components/Inputs";
+import { Toaster, toast } from "sonner";
 
 export default function PrincipalCliente() {
   const navigate = useNavigate();
@@ -22,7 +24,6 @@ export default function PrincipalCliente() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [mensagem, setMensagem] = useState("");
   const [token, setToken] = useState("");
   const [id, setId] = useState("");
   const [currentPaciente, setCurrentPaciente] = useState({
@@ -53,8 +54,7 @@ export default function PrincipalCliente() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMensagem(response.data.msg || "Dados editados com sucesso!");
-      alert(mensagem)
+      toast.success(`${response.data.msg}` || "Dados editados com sucesso!")
       setModalEdt(false);
     } catch (error) {
       handleErrorResponse(error);
@@ -70,8 +70,7 @@ export default function PrincipalCliente() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMensagem(response.data.msg || "Paciente deletado com sucesso!");
-      alert(mensagem)
+      toast.success(`${response.data.msg}` || "Paciente deletado com sucesso!");
       setModalDel(false);
     } catch (error) {
       handleErrorResponse(error);
@@ -85,17 +84,10 @@ export default function PrincipalCliente() {
         alert("Sessão expirada");
         navigate("/login");
       } else {
-        setMensagem(
-          error.response.data.msg ||
-            "Erro ao processar a solicitação. Por favor, tente novamente mais tarde."
-        );
-        alert(mensagem)
+        toast.error(`${error.response.data.msg}` || "Erro ao processar a solicitação. Por favor, tente novamente mais tarde.")
       }
     } else {
-      setMensagem(
-        "Erro ao processar a solicitação. Por favor, tente novamente mais tarde."
-      );
-      alert(mensagem)
+      toast.error("Erro ao processar a solicitação. Por favor, tente novamente mais tarde.")
     }
   }
 
@@ -116,12 +108,58 @@ export default function PrincipalCliente() {
   }
   return (
     <>
-    {modalEdt && (
-      <Modal isOpen={modalEdt} setIsOpen={setModalEdt} titulo={`Editar Dados`} form />
-    )}
-    {modalDel && (
-      <Modal isOpen={modalDel} setIsOpen={setModalDel} titulo={`Excluir Conta`} del />
-    )}
+      {modalEdt && (
+        <Modal
+          isOpen={modalEdt}
+          setIsOpen={setModalEdt}
+          titulo={`Editar Dados`}
+          form
+        >
+          <form className="mt-5 space-y-8" onSubmit={edtDadosSubmit}>
+            {" "}
+            <div className="relative z-0">
+              {" "}
+              <Inputs label={"Nome:"} />{" "}
+            </div>{" "}
+            <div className="relative z-0">
+              {" "}
+              <Inputs label={"Email:"} />{" "}
+            </div>{" "}
+            <div className="relative z-0">
+              {" "}
+              <Inputs label={"Senha:"} isSenha />{" "}
+            </div>{" "}
+            <button className="bg-[#00bfa6] rounded-lg hover:opacity-90 transition-opacity text-white font-semibold w-full py-2">
+              {" "}
+              Salvar{" "}
+            </button>{" "}
+          </form>
+        </Modal>
+      )}
+      {modalDel && (
+        <Modal
+          isOpen={modalDel}
+          setIsOpen={setModalDel}
+          titulo={`Excluir Conta`}
+          del
+          delOnClick={deletar}
+        />
+      )}
+      <Toaster
+        expand
+        position="top-center"
+        richColors
+        toastOptions={{
+          style: {
+            margin: "10px",
+            padding: "15px",
+            maxWidth: "400px",
+            borderRadius: "8px",
+            gap: "10px",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      />
       <header className="p-3 z-50 w-full text-white">
         <div className=" bg-green-900 rounded-2xl px-6 py-4 shadow-xl flex items-center justify-center md:justify-between md:flex-row flex-col border-b-4 border-green-400">
           <div className="flex md:flex-row flex-col items-center gap-4">
@@ -146,33 +184,10 @@ export default function PrincipalCliente() {
       </header>
       <main className="max-w-[1440px] mx-auto 2xl:p-0 py-3 px-6">
         <h1 className="py-7 text-2xl font-bold">Acesso Rápido</h1>
-        {/* <section className="flex items-center justify-center md:gap-0 gap-5 md:justify-between flex-wrap">
-          <div className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
-            <BookBookmark size={40} />
-            <h2 className="font-semibold text-lg">Diário</h2>
-          </div>
-
-          <div className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
-            <Wind size={40} />
-            <h2 className="font-semibold text-lg">Respiração Guiada</h2>
-          </div>
-
-          <div className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
-            <Database size={40} />
-            <h2 className="font-semibold text-lg">Registro Emoções</h2>
-          </div>
-
-          <div onClick={() => setModalEdt(true)} className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
-            <NotePencil size={40} />
-            <h2 className="font-semibold text-lg">Editar Dados</h2>
-          </div>
-
-          <div onClick={() => setModalDel(true)} className="cursor-pointer w-36 h-44 bg-gray-200 rounded-md p-5 shadow-3D hover:border-b-4 hover:border-gray-500 transition-all flex flex-col justify-around">
-            <Trash size={40} />
-            <h2 className="font-semibold text-lg">Deletar Conta</h2>
-          </div>
-        </section> */}
-        <HoverDevCards onClickEdt={() => setModalEdt(true)} onClickDel={() => setModalDel(true)} />
+        <HoverDevCards
+          onClickEdt={() => openEditModal(currentPaciente)}
+          onClickDel={() => openDeleteModal(currentPaciente)}
+        />
         <h1 className="py-11 text-2xl font-bold">Guias</h1>
         <section className="flex items-center flex-col gap-10">
           <div className="w-full h-72 sm:h-56 md:h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">
@@ -203,14 +218,37 @@ export default function PrincipalCliente() {
   );
 }
 
-const HoverDevCards = ({onClickEdt, onClickDel}) => {
+const HoverDevCards = ({ onClickEdt, onClickDel }) => {
   return (
-      <div className="grid justify-between gap-4 grid-cols-2 lg:grid-cols-4">
-        <HoverForCards title="Diário" subtitle={<ArrowUpRight />} Icon={BookBookmark} />
-        <HoverForCards title="Respiração Guiada" subtitle={<ArrowUpRight />} Icon={Wind} link={"/principalPsico/listapaciente"} isLink />
-        <HoverForCards title="Registro Emoções" subtitle={<ArrowUpRight />} Icon={Database} />
-        <HoverForCards title="Editar Dados" subtitle={<ArrowUpRight />} Icon={NotePencil} onClick={onClickEdt} />
-        <HoverForCards title="Deletar Conta" subtitle={<ArrowUpRight />} Icon={Trash} onClick={onClickDel} />
-      </div>
+    <div className="grid justify-between gap-4 grid-cols-2 lg:grid-cols-4">
+      <HoverForCards
+        title="Diário"
+        subtitle={<ArrowUpRight />}
+        Icon={BookBookmark}
+      />
+      <HoverForCards
+        title="Respiração Guiada"
+        subtitle={<ArrowUpRight />}
+        Icon={Wind}
+        link={"/principalPsico/listapaciente"}
+      />
+      <HoverForCards
+        title="Registro Emoções"
+        subtitle={<ArrowUpRight />}
+        Icon={Database}
+      />
+      <HoverForCards
+        title="Editar Dados"
+        subtitle={<ArrowUpRight />}
+        Icon={NotePencil}
+        onClick={onClickEdt}
+      />
+      <HoverForCards
+        title="Deletar Conta"
+        subtitle={<ArrowUpRight />}
+        Icon={Trash}
+        onClick={onClickDel}
+      />
+    </div>
   );
 };
