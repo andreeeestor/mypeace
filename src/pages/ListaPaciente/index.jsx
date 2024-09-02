@@ -134,7 +134,7 @@ export default function ListaPaciente() {
     setModalDel(true);
   }
   return (
-    <div className="bg-[#3c5454] h-screen">
+    <div className="bg-[#3c5454] h-screen p-6">
       <Toaster
         expand
         position="top-center"

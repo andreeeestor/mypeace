@@ -15,20 +15,20 @@ export default function Home() {
           <h1 className="absolute z-50 top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 text-white text-6xl">
             MyPeace.
           </h1>
-          <Carousel className="h-full ">
+          <Carousel>
             <img
               src="https://images.pexels.com/photos/725255/pexels-photo-725255.jpeg"
-              className="opacity-50"
+              className="opacity-50 h-full md:h-auto"
               alt="Imagem 1"
             />
             <img
               src="https://images.pexels.com/photos/1261459/pexels-photo-1261459.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="opacity-50"
+              className="opacity-50 h-full md:h-auto"
               alt="Imagem 2"
             />
             <img
               src="https://images.pexels.com/photos/1624565/pexels-photo-1624565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="opacity-50"
+              className="opacity-50 h-full md:h-auto"
               alt="Imagem 3"
             />
           </Carousel>

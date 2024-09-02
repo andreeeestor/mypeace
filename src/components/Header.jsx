@@ -4,7 +4,8 @@ import { MotionConfig, motion } from "framer-motion";
 import { useState } from "react";
 import { 
   SignIn,
-  UserCirclePlus
+  UserCirclePlus,
+  Person
 } from "@phosphor-icons/react";
 
 const wrapperVariants = {
@@ -100,6 +101,8 @@ const StaggeredDropDown = ({ open, setOpen }) => {
           <Option setOpen={setOpen} Icon={Trash} text="Remove" /> */}
           <Option link={"/login"} setOpen={setOpen} Icon={SignIn} text="Login" />
           <Option link={"/cadastroPsicologo"} setOpen={setOpen} Icon={UserCirclePlus} text="Cadastro" />
+          <Option link={"/principalPsico"} setOpen={setOpen} Icon={Person} text="Menu | Psicólogo" />
+          <Option link={"/principalCliente"} setOpen={setOpen} Icon={Person} text="Menu | Cliente" />
         </motion.ul>
       </motion.div>
     );
