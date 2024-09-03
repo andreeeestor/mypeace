@@ -31,14 +31,14 @@ export default function PrincipalCliente() {
     email: "",
   });
 
-  // useEffect(() => {
-  //   if (!state?.token || !state?.id) {
-  //     navigate("/login");
-  //   } else {
-  //     setToken(state.token);
-  //     setId(state.id);
-  //   }
-  // }, [navigate, state]);
+  useEffect(() => {
+    if (!state?.token || !state?.id) {
+      navigate("/login");
+    } else {
+      setToken(state.token);
+      setId(state.id);
+    }
+  }, [navigate, state]);
 
   const edtDadosSubmit = async (e) => {
     e.preventDefault();

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import { http } from "../../App";
 import Modal from "../../components/Modal";
-import Example from "../../components/FloatingPhone";
 import FloatingPhone from "../../components/FloatingPhone";
 
 export default function CadastroPsicologo() {
@@ -16,7 +15,6 @@ export default function CadastroPsicologo() {
   const [registroNumero, setRegistroNumero] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [mensagem, setMensagem] = useState("");
   const [isEmailVerificationVisible, setEmailVerificationVisible] =
     useState(false);
   const [codigo, setCodigo] = useState("");
@@ -38,12 +36,8 @@ export default function CadastroPsicologo() {
       })
       .catch((error) => {
         if (error.response) {
-          setMensagem(error.response.data.msg);
           toast.error(`${error.response.data.msg}`);
         } else {
-          setMensagem(
-            "Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde."
-          );
           toast.error(
             "Erro ao cadastrar psicólogo. Por favor, tente novamente mais tarde."
           );

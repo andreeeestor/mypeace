@@ -1,17 +1,10 @@
 import {
   ArrowLeft,
   ArrowUpRight,
-  BookBookmark,
-  CreditCard,
   Database,
-  NotePencil,
-  Trash,
   User,
   UserCirclePlus,
   UserList,
-  Users,
-  Wind,
-  Envelope,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -19,13 +12,26 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import HoverForCards from "../../components/HoverForCards";
 
-const HoverDevCards = () => {
+const HoverDevCards = ({ onVerPacientes }) => {
   return (
-      <div className="grid justify-between gap-4 grid-cols-2 lg:grid-cols-4">
-        <HoverForCards title="Adicionar Pacientes" subtitle={<ArrowUpRight />} Icon={UserCirclePlus} />
-        <HoverForCards title="Registro dos Pacientes" subtitle={<ArrowUpRight />} Icon={Database} />
-        <HoverForCards title="Ver Pacientes" subtitle={<ArrowUpRight />} Icon={UserList} link={"/principalPsico/listapaciente"} isLink />
-      </div>
+    <div className="grid justify-between gap-4 grid-cols-2 lg:grid-cols-4">
+      <HoverForCards
+        title="Adicionar Pacientes"
+        subtitle={<ArrowUpRight />}
+        Icon={UserCirclePlus}
+      />
+      <HoverForCards
+        title="Registro dos Pacientes"
+        subtitle={<ArrowUpRight />}
+        Icon={Database}
+      />
+      <HoverForCards
+        title="Ver Pacientes"
+        subtitle={<ArrowUpRight />}
+        Icon={UserList}
+        onClick={onVerPacientes} 
+      />
+    </div>
   );
 };
 
@@ -35,14 +41,14 @@ export default function PrincipalPsico() {
   const [token, setToken] = useState("");
   const [id, setId] = useState("");
 
-  // useEffect(() => {
-  //   if (!state?.token || !state?.id) {
-  //     navigate("/login");
-  //   } else {
-  //     setToken(state.token);
-  //     setId(state.id);
-  //   }
-  // }, [navigate, state]);
+  useEffect(() => {
+    if (!state?.token || !state?.id) {
+      navigate("/login");
+    } else {
+      setToken(state.token);
+      setId(state.id);
+    }
+  }, [navigate, state]);
 
   const handleVerPacientes = () => {
     navigate("/principalPsico/listapaciente", { state: { token, id } });
@@ -74,7 +80,7 @@ export default function PrincipalPsico() {
       </header>
       <main className="max-w-[1440px] mx-auto 2xl:p-0 py-3 px-6">
         <h1 className="py-7 text-2xl font-bold">Acesso Rápido</h1>
-        <HoverDevCards />
+        <HoverDevCards onVerPacientes={handleVerPacientes} />
         <h1 className="py-11 text-2xl font-bold">Adicionar Pacientes</h1>
         <section className="flex flex-col gap-10">
           <div className="w-full h-72 sm:h-56 md:h-40 bg-green-800 rounded-2xl transition-all shadow-xl hover:shadow-2xl text-white p-6 text-2xl relative">

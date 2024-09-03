@@ -27,15 +27,15 @@ export default function ListaPaciente() {
   const [modalAdd, setModalAdd] = useState(false);
   const [currentPaciente, setCurrentPaciente] = useState(null);
 
-  // useEffect(() => {
-  //     if (!state?.token || !state?.id) {
-  //         navigate("/login");
-  //     } else {
-  //         setToken(state.token);
-  //         setId(state.id);
-  //         fetchPacientes(state.token, state.id);
-  //     }
-  // }, [navigate, state]);
+  useEffect(() => {
+      if (!state?.token || !state?.id) {
+          navigate("/login");
+      } else {
+          setToken(state.token);
+          setId(state.id);
+          fetchPacientes(state.token, state.id);
+      }
+  }, [navigate, state]);
 
   async function fetchPacientes(token, idUser) {
     try {
@@ -73,6 +73,7 @@ export default function ListaPaciente() {
         `Senha do usuáio: ${response.data.password}` ||
           "Paciente cadastrado com sucesso!"
       );
+      console.log(response.data.password)
       setModalAdd(false);
       fetchPacientes(token, id);
     } catch (error) {
@@ -140,9 +141,9 @@ export default function ListaPaciente() {
   }
 
   function openEditModal(paciente) {
-    // setCurrentPaciente(paciente);
-    // setName(paciente.name);
-    // setEmail(paciente.email);
+    setCurrentPaciente(paciente);
+    setName(paciente.name);
+    setEmail(paciente.email);
     setModalEdt(true);
   }
 
@@ -281,55 +282,42 @@ export default function ListaPaciente() {
           </div>
         </header>
         <Table>
-          {/* {pacientes.length > 0 ? (
+           {pacientes.length > 0 ? (
             pacientes.map((paciente, index) => (
               <tr key={paciente._id}>
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                  {index + 1}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  {paciente.name}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                  {paciente.email}
-                </td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700"></td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700"></td>
-              </tr>
-            ))
-          ) : (
-            <tr className="cadastros">
-              <td className="py-2 italic">Nenhum paciente encontrado</td>
-            </tr>
-          )} */}
-          <tr>
             <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              1
+              {index + 1}
             </td>
             <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-              Sokomo Kudi Ydhosa
+              {paciente.name}
             </td>
             <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-              testefodase@gmail.com
+              {paciente.email}
             </td>
             <td className="whitespace-nowrap px-4 py-2 text-gray-700">
               <Button>Verificar</Button>
             </td>
             <td className="whitespace-nowrap px-4 py-2 text-gray-700 flex items-center gap-2 flex-wrap">
               <button
-                onClick={() => openDeleteModal()}
+                onClick={() => openDeleteModal(paciente)}
                 className="p-2 bg-[#bf0047] rounded-md shadow-3D transition-all hover:opacity-90"
               >
                 <Trash weight="fill" color="white" />
               </button>
               <button
-                onClick={() => openEditModal()}
+                onClick={() => openEditModal(paciente)}
                 className="p-2 bg-[#00bfa6] rounded-md shadow-3D transition-all hover:opacity-90"
               >
                 <NotePencil weight="fill" color="white" />
               </button>
             </td>
           </tr>
+            ))
+          ) : (
+            <tr>
+              <td className="py-2 italic">Nenhum paciente encontrado</td>
+            </tr>
+          )} 
         </Table>
         <div className="mt-6 p-4 bg-indigo-500 rounded-full text-xs text-white font-semibold flex md:hidden justify-center items-center gap-x-2 shadow-md">
             <CalendarDots weight="fill" size={18} />

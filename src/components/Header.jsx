@@ -5,7 +5,7 @@ import { useState } from "react";
 import { 
   SignIn,
   UserCirclePlus,
-  Person
+  House
 } from "@phosphor-icons/react";
 
 const wrapperVariants = {
@@ -53,11 +53,10 @@ const actionIconVariants = {
 };
 
 /**
- * Componente de opção para o dropdown
  * @param {Object} props
- * @param {string} props.text - Texto exibido na opção
- * @param {React.ElementType} props.Icon - Componente ícone a ser exibido
- * @param {Function} props.setOpen - Função para definir o estado de abertura do dropdown
+ * @param {string} props.text 
+ * @param {React.ElementType} props.Icon
+ * @param {Function} props.setOpen 
  */
 const Option = ({ text, Icon, setOpen, link }) => {
   return (
@@ -77,10 +76,9 @@ const Option = ({ text, Icon, setOpen, link }) => {
 };
 
 /**
- * Componente de dropdown do menu
  * @param {Object} props
- * @param {boolean} props.open - Estado do dropdown (aberto ou fechado)
- * @param {Function} props.setOpen - Função para definir o estado de abertura do dropdown
+ * @param {boolean} props.open 
+ * @param {Function} props.setOpen 
  */
 const StaggeredDropDown = ({ open, setOpen }) => {
     return (
@@ -95,14 +93,9 @@ const StaggeredDropDown = ({ open, setOpen }) => {
           style={{ originY: "top", left: "-50px" }}
           className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-3D absolute top-[120%] w-48 overflow-hidden"
         >
-          {/* <Option setOpen={setOpen} Icon={NotePencil} text="Edit" />
-          <Option setOpen={setOpen} Icon={PlusSquare} text="Duplicate" />
-          <Option setOpen={setOpen} Icon={Share} text="Share" />
-          <Option setOpen={setOpen} Icon={Trash} text="Remove" /> */}
+          <Option link={"/"} setOpen={setOpen} Icon={House} text="Home" />
           <Option link={"/login"} setOpen={setOpen} Icon={SignIn} text="Login" />
           <Option link={"/cadastroPsicologo"} setOpen={setOpen} Icon={UserCirclePlus} text="Cadastro" />
-          <Option link={"/principalPsico"} setOpen={setOpen} Icon={Person} text="Menu | Psicólogo" />
-          <Option link={"/principalCliente"} setOpen={setOpen} Icon={Person} text="Menu | Cliente" />
         </motion.ul>
       </motion.div>
     );
@@ -110,7 +103,6 @@ const StaggeredDropDown = ({ open, setOpen }) => {
   
 
 /**
- * Componente do cabeçalho
  * @returns {JSX.Element}
  */
 const Header = () => {
@@ -133,10 +125,9 @@ const Header = () => {
 };
 
 /**
- * Componente do botão de hambúrguer animado
  * @param {Object} props
- * @param {boolean} props.active - Estado do botão de hambúrguer (ativo ou inativo)
- * @param {Function} props.setActive - Função para definir o estado do botão de hambúrguer
+ * @param {boolean} props.active 
+ * @param {Function} props.setActive 
  * @returns {JSX.Element}
  */
 const AnimatedHamburgerButton = ({ active, setActive }) => {
@@ -178,7 +169,6 @@ const AnimatedHamburgerButton = ({ active, setActive }) => {
   );
 };
 
-// Variantes de animação para o botão de hambúrguer
 const VARIANTS = {
   top: {
     open: {
